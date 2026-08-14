@@ -1,0 +1,986 @@
+
+:root{
+  --bg:#f5f2ea;--card:#fffdf9;--text:#18221f;--title:#3d4642;--muted:#737e79;--line:#e6dfd4;
+  --green:#17845a;--green-soft:#e7f5ee;--orange:#df7b34;--orange-soft:#fff0e5;
+  --blue:#4d72c8;--blue-soft:#edf2ff;--purple:#765ac2;--purple-soft:#f1ecff;
+  --sand:#af8049;--sand-soft:#fbf1e4;--red:#c64e4e;--red-soft:#fff0ef;
+  --shadow:0 13px 34px rgba(41,48,43,.075);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;font-family:"Tajawal",system-ui,sans-serif;color:var(--text);background:
+radial-gradient(circle at 0 0,rgba(229,193,128,.14),transparent 26rem),
+radial-gradient(circle at 100% 0,rgba(59,146,106,.10),transparent 28rem),var(--bg)}
+button,input,select,textarea{font:inherit}button{cursor:pointer}[hidden]{display:none!important}
+svg{width:1.2em;height:1.2em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.svg-sprite{position:absolute;width:0;height:0;overflow:hidden}
+
+/* login */
+.auth-shell{min-height:100vh;display:grid;place-items:center;padding:24px;position:relative;overflow:hidden}
+.orb{position:absolute;border-radius:50%}.orb1{width:360px;height:360px;background:#d8ecdf;right:-130px;top:-130px}.orb2{width:280px;height:280px;background:#f3dfc2;left:-90px;bottom:-100px}
+.auth-card{position:relative;z-index:2;width:min(450px,100%);padding:34px;background:rgba(255,253,249,.94);border:1px solid rgba(255,255,255,.9);border-radius:29px;box-shadow:0 30px 80px rgba(42,63,51,.14);backdrop-filter:blur(14px)}
+.brand-row{display:flex;align-items:center;gap:13px}.brand-image{width:62px;height:62px;object-fit:cover;border-radius:20px;box-shadow:0 10px 24px rgba(20,65,46,.18)}.brand-row span{font-size:11px;color:#47816a;font-weight:800}.brand-row h1{margin:2px 0 0;font-size:30px}
+.login-copy{margin:30px 0 22px}.login-copy h2{margin:0 0 6px}.login-copy p{margin:0;color:var(--muted)}
+.login-form{display:grid;gap:15px}.field{display:grid;gap:7px}.field>span{font-size:13px;font-weight:800;color:#3b4541}.field em{font-style:normal;color:#9ba29f;font-size:10px;margin-right:4px}
+.input-shell{min-height:52px;display:flex;align-items:center;gap:9px;padding:0 13px;border:1.5px solid var(--line);border-radius:15px;background:#fff}.input-shell:focus-within{border-color:#8abca3;box-shadow:0 0 0 4px rgba(23,132,90,.08)}
+.input-shell input{border:0;outline:0;width:100%;min-width:0;background:transparent;padding:13px 0;color:var(--text);font-size:16px}.input-shell svg{color:#81908a}.input-shell b{font-size:11px;color:var(--muted);white-space:nowrap}.input-emoji{font-size:20px}
+textarea{width:100%;border:1.5px solid var(--line);border-radius:15px;padding:13px;background:#fff;outline:none;resize:vertical;color:var(--text);font-size:16px}textarea:focus{border-color:#8abca3;box-shadow:0 0 0 4px rgba(23,132,90,.08)}
+.btn{border:0;border-radius:14px;padding:11px 16px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:.18s}.btn:hover{transform:translateY(-1px)}.primary{background:linear-gradient(135deg,#11835a,#2ca472);color:#fff}.expense-primary{background:linear-gradient(135deg,#d96d24,#ed914f);color:#fff}.soft{background:#efede7;color:var(--text)}.danger{background:var(--red);color:#fff}.big{min-height:54px;font-size:16px;margin-top:4px}
+.error-box{padding:11px;background:var(--red-soft);color:var(--red);border-radius:12px;font-weight:700}
+
+/* shell */
+.topbar{position:sticky;top:0;z-index:40;background:rgba(255,253,249,.9);backdrop-filter:blur(14px);border-bottom:1px solid rgba(225,219,207,.8)}
+.topbar-inner{max-width:1200px;margin:auto;min-height:70px;padding:0 18px;display:flex;align-items:center;justify-content:space-between}
+.brand-button{border:0;background:none;display:flex;align-items:center;gap:10px;text-align:right;color:inherit}.mini-brand-image{width:42px;height:42px;object-fit:cover;border-radius:13px}.brand-button strong{display:block;font-size:18px}.brand-button small{display:block;font-size:10px;color:var(--muted)}
+.topbar-actions{display:flex;align-items:center;gap:9px}.account-chip{display:flex;align-items:center;gap:9px;background:#fff;border:1px solid var(--line);padding:6px 10px;border-radius:15px}.avatar{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;background:var(--green-soft);color:var(--green)}.account-chip strong{display:block;font-size:12px}.account-chip small{display:block;font-size:9px;color:var(--muted)}
+.icon-btn{width:42px;height:42px;border:1px solid var(--line);border-radius:13px;background:#fff;color:var(--text)}
+.quick-nav{position:sticky;top:70px;z-index:35;background:rgba(245,242,234,.88);backdrop-filter:blur(12px);border-bottom:1px solid rgba(225,219,207,.72)}
+.quick-nav-inner{max-width:1200px;margin:auto;padding:8px 18px;display:flex;gap:7px;overflow:auto;scrollbar-width:none}.quick-nav-inner::-webkit-scrollbar{display:none}.nav-pill{border:1px solid #e4ded2;background:rgba(255,255,255,.82);color:#5e6c66;border-radius:999px;padding:8px 13px;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:800;white-space:nowrap}.nav-pill.active{background:#193f32;color:#fff;border-color:#193f32}
+
+/* period */
+.period-shell{position:sticky;top:119px;z-index:32;background:rgba(255,255,255,.72);backdrop-filter:blur(12px);border-bottom:1px solid rgba(224,217,204,.8)}
+.period-inner{max-width:1200px;margin:auto;padding:9px 18px;display:flex;align-items:center;justify-content:center;gap:9px}
+.period-arrow{width:38px;height:38px;border:1px solid var(--line);border-radius:12px;background:#fff;color:#46514c;display:grid;place-items:center}.period-arrow:disabled{opacity:.35;cursor:not-allowed}
+.period-title{min-width:185px;text-align:center}.period-title span{display:block;font-size:9px;color:var(--muted);font-weight:700}.period-title strong{display:block;font-size:13px;margin-top:2px}
+.all-time-btn{border:1px solid #bdd8ca;background:#eaf6f0;color:#176c4b;border-radius:12px;padding:9px 12px;font-size:11px;font-weight:800}.all-time-btn.active{background:#176c4b;color:white}
+
+.container{max-width:1200px;margin:auto;padding:22px 18px 55px}.page{display:none}.page.active{display:block;animation:fade .18s ease}@keyframes fade{from{opacity:.45;transform:translateY(3px)}}
+.hero{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:31px 34px;border-radius:28px;background:linear-gradient(130deg,#173c31,#207052 65%,#3b9b70);color:#fff;box-shadow:0 20px 50px rgba(29,72,55,.17);overflow:hidden;position:relative}.hero::after{content:"";position:absolute;width:250px;height:250px;border-radius:50%;border:1px solid rgba(255,255,255,.12);left:-80px;bottom:-160px;box-shadow:0 0 0 45px rgba(255,255,255,.025)}
+.hero-kicker,.kicker{font-size:11px;font-weight:800;color:#a9d9c2}.kicker{color:#33765d}.hero h1{font-size:31px;margin:6px 0}.hero p{margin:0;color:#d6e7de}.hero-actions{display:flex;gap:10px;position:relative;z-index:2}.hero-btn{border:0;border-radius:17px;padding:16px 20px;min-width:135px;color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 12px 25px rgba(0,0,0,.13)}.hero-btn.sale{background:linear-gradient(135deg,#24a66f,#137a52)}.hero-btn.expense{background:linear-gradient(135deg,#f29a50,#d76b25)}
+
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px}.stat-card{padding:19px;border:1px solid #e9e2d8;border-radius:21px;background:#fff;box-shadow:var(--shadow);min-height:150px}.stat-icon{width:43px;height:43px;border-radius:13px;display:grid;place-items:center;margin-bottom:13px;font-size:20px}.green-icon{background:var(--green-soft);color:var(--green)}.orange-icon{background:var(--orange-soft);color:var(--orange)}.blue-icon{background:var(--blue-soft);color:var(--blue)}.purple-icon{background:var(--purple-soft);color:var(--purple)}.pigeon-icon{font-size:23px}
+.stat-title{display:block;font-size:12px;font-weight:800;color:#4a514e}.stat-card strong{display:block;font-size:22px;margin-top:8px;direction:ltr;text-align:right}.stat-card small{display:block;font-size:10px;margin-top:6px;color:#7d8782}.green-number{color:var(--green)!important}.orange-number{color:var(--orange)!important}.blue-number{color:var(--blue)!important}.purple-number{color:var(--purple)!important}
+
+.panel{margin-top:14px;padding:22px;background:rgba(255,253,249,.96);border:1px solid rgba(230,223,212,.9);border-radius:23px;box-shadow:0 8px 24px rgba(45,53,44,.05)}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:15px}.panel-head h2{margin:3px 0 0;font-size:19px}.text-btn{border:0;background:none;color:var(--green);font-weight:800;font-size:12px}
+.latest-list{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}.latest-item{padding:14px;border:1px solid var(--line);border-radius:16px;background:#fff}.latest-top{display:flex;justify-content:space-between;gap:8px;align-items:center}.latest-item strong{font-size:16px}.latest-item small{display:block;color:var(--muted);margin-top:6px;line-height:1.6}.empty-mini{text-align:center;color:var(--muted);padding:24px}
+
+/* pages/forms */
+.page-title{display:flex;align-items:center;gap:12px;margin-bottom:14px}.page-title h1{margin:2px 0 3px;font-size:25px}.page-title p{margin:0;color:var(--muted);font-size:12px}.heading-icon{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;font-size:21px;flex:0 0 auto}.sale-bg{background:var(--green-soft);color:var(--green)}.expense-bg{background:var(--orange-soft);color:var(--orange)}.sand-bg{background:var(--sand-soft);color:var(--sand)}.blue-bg{background:var(--blue-soft);color:var(--blue)}.back-btn{width:40px;height:40px;border:1px solid var(--line);border-radius:13px;background:#fff;display:grid;place-items:center}
+.form-panel{max-width:820px;margin-right:auto;margin-left:auto}.operation-form{display:grid;gap:17px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.full{grid-column:1/-1}.save-big{min-height:54px;font-size:15px}
+.hijri-preview{font-size:11px;color:#54635d;background:#f5f2ec;border-radius:10px;padding:7px 9px;margin-top:1px}
+.edit-banner{display:flex;align-items:center;gap:12px;padding:14px;margin-bottom:18px;border-radius:16px;background:#edf2ff;border:2px solid #9eb5f1;color:#35549f;box-shadow:0 9px 24px rgba(77,114,200,.09)}.expense-banner{background:#fff3e9;border-color:#f1b986;color:#a45321}.edit-banner-icon{width:42px;height:42px;border-radius:13px;background:#fff;display:grid;place-items:center;flex:0 0 auto}.edit-banner strong{display:block;font-size:14px}.edit-banner span{display:block;font-size:11px;margin-top:3px}.edit-banner .btn{margin-right:auto;white-space:nowrap}
+
+/* expense categories */
+.category-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:1px}.category-option input{position:absolute;opacity:0;pointer-events:none}.category-option span{min-height:82px;border:1.5px solid var(--line);border-radius:15px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;transition:.15s;padding:9px 5px}.category-option b{font-size:24px;line-height:1}.category-option em{font-style:normal;font-weight:800;color:#4b5551;font-size:12px}.category-option input:checked+span{border-color:#df7b34;background:#fff4eb;box-shadow:0 0 0 3px rgba(223,123,52,.09)}.category-option input:checked+span em{color:#a8551f}
+
+/* records */
+.filters{display:flex;gap:9px;justify-content:flex-end;margin-bottom:15px}.filters select,.search-box{height:43px;border:1px solid var(--line);background:#fff;border-radius:12px}.filters select{padding:0 11px;color:var(--text)}.search-box{display:flex;align-items:center;gap:7px;padding:0 11px;min-width:260px}.search-box input{border:0;outline:0;width:100%;background:transparent;font-size:16px}
+.table-wrap{overflow:auto;border:1px solid #eee8de;border-radius:16px;background:#fff}table{width:100%;border-collapse:collapse;min-width:900px}th,td{text-align:right;padding:13px 11px;border-bottom:1px solid #f0ebe2}th{background:#f8f6f1;color:#68746e;font-size:11px}td{font-size:12px}tbody tr:hover{background:#fcfaf6}.date-cell strong{display:block;font-size:11px}.date-cell small{display:block;color:#77847e;margin-top:3px}.badge{display:inline-flex;min-width:60px;justify-content:center;padding:5px 9px;border-radius:999px;font-size:10px;font-weight:800}.badge.sale{background:var(--green-soft);color:var(--green)}.badge.expense{background:var(--orange-soft);color:var(--orange)}
+.row-actions{display:flex;gap:5px}.row-actions button{border:0;border-radius:9px;padding:7px}.edit-btn{background:var(--blue-soft);color:var(--blue)}.delete-btn{background:var(--red-soft);color:var(--red)}
+.loading,.empty-view{text-align:center;padding:35px;color:var(--muted)}.loading span{display:inline-block;width:18px;height:18px;border:2px solid #ddd5c8;border-top-color:var(--green);border-radius:50%;vertical-align:middle;animation:spin .7s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.operations-cards{display:none}
+
+/* finance */
+.finance-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.finance-summary article{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 6px 18px rgba(45,53,44,.04)}.finance-summary span{display:block;font-size:11px;color:#4d5753;font-weight:800}.finance-summary strong{display:block;font-size:20px;margin-top:7px;direction:ltr;text-align:right}
+.charts-grid{display:grid;grid-template-columns:1.45fr 1fr;gap:14px}.chart-card{min-height:365px}.chart-wrap{height:285px;margin-top:14px}.donut-wrap{max-width:330px;margin:14px auto 0}.tops-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.rank-list{display:grid;gap:9px;margin-top:15px}.rank-item{display:grid;grid-template-columns:36px 1fr auto;align-items:center;gap:10px;padding:11px;border:1px solid var(--line);border-radius:14px;background:#fff}.rank-num{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;background:var(--sand-soft);color:var(--sand);font-weight:800}.rank-item small{display:block;color:var(--muted);margin-top:2px;line-height:1.5}.rank-item>strong{direction:ltr}
+
+/* backup */
+.backup-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.backup-card{min-height:100px;display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:17px;background:#fff;padding:15px;text-align:right;color:var(--text)}.backup-card input{display:none}.backup-icon{width:45px;height:45px;border-radius:13px;display:grid;place-items:center}.backup-icon.green{background:var(--green-soft);color:var(--green)}.backup-icon.blue{background:var(--blue-soft);color:var(--blue)}.backup-card strong{display:block}.backup-card small{display:block;color:var(--muted);margin-top:4px}
+
+/* signature */
+.made-with-love{display:flex;align-items:center;justify-content:center;gap:6px;color:#111;font-size:12px;font-weight:800;padding:8px 16px 28px}.heart{color:#e23232;font-size:17px;display:inline-block;animation:heartbeat 1.1s ease-in-out infinite}@keyframes heartbeat{0%,100%{transform:scale(1)}15%{transform:scale(1.23)}30%{transform:scale(1)}45%{transform:scale(1.16)}60%{transform:scale(1)}}
+
+/* dialogs/toast */
+dialog{border:0;border-radius:22px;padding:0;background:transparent;max-width:430px;width:calc(100% - 30px)}dialog::backdrop{background:rgba(20,38,31,.5)}.dialog-card{background:var(--card);border-radius:22px;padding:24px;text-align:center}.dialog-icon{width:55px;height:55px;border-radius:18px;background:var(--blue-soft);color:var(--blue);display:grid;place-items:center;margin:0 auto 12px;font-size:24px}.restore-summary{background:#f2efe8;padding:9px;border-radius:10px}.dialog-actions{display:flex;gap:8px;justify-content:center}
+.toast{position:fixed;left:18px;bottom:18px;z-index:100;background:#15382d;color:#fff;padding:12px 15px;border-radius:13px;font-weight:800;font-size:12px;box-shadow:0 14px 30px rgba(20,50,39,.22)}
+
+@media(max-width:900px){.stats-grid{grid-template-columns:repeat(2,1fr)}.latest-list{grid-template-columns:1fr 1fr}.charts-grid,.tops-grid{grid-template-columns:1fr}.finance-summary{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:650px){
+  .topbar-inner{min-height:62px;padding:0 10px}.quick-nav{top:62px}.period-shell{top:109px}.quick-nav-inner{padding:7px 10px}.account-chip>div:not(.avatar){display:none}
+  .period-inner{padding:8px 10px;gap:6px}.period-title{min-width:130px}.period-title strong{font-size:12px}.period-arrow{width:36px;height:36px}.all-time-btn{padding:8px 9px;font-size:10px}
+  .container{padding:12px 10px 40px}.hero{display:block;padding:22px 18px;border-radius:21px}.hero h1{font-size:25px}.hero-actions{margin-top:17px}.hero-btn{flex:1;min-width:0;padding:14px 10px;font-size:12px}
+  .stats-grid{gap:8px;margin-top:9px}.stat-card{min-height:129px;padding:14px;border-radius:17px}.stat-card strong{font-size:17px}.stat-icon{width:37px;height:37px;margin-bottom:9px}.stat-title{font-size:11px}
+  .latest-list{grid-template-columns:1fr}.panel{padding:15px;border-radius:18px}.page-title h1{font-size:20px}.page-title p{font-size:11px}.heading-icon{width:43px;height:43px;border-radius:13px}
+  .form-grid{grid-template-columns:1fr}.full{grid-column:auto}.edit-banner{align-items:flex-start;flex-wrap:wrap}.edit-banner .btn{margin-right:54px}.category-grid{grid-template-columns:repeat(4,1fr);gap:6px}.category-option span{min-height:74px;border-radius:13px;padding:7px 2px}.category-option b{font-size:21px}.category-option em{font-size:10px}
+  .filters{display:grid}.search-box{min-width:0}.table-wrap{display:none}.operations-cards{display:grid;gap:8px}.operation-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px}.operation-card-top{display:flex;justify-content:space-between;align-items:center}.operation-card-date{margin-top:8px;font-size:10px;color:var(--muted);line-height:1.7}.operation-card-meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.meta-chip{padding:5px 7px;background:#f5f2ec;border-radius:999px;font-size:10px;color:var(--muted)}.operation-card-note{margin-top:9px;padding-top:9px;border-top:1px dashed var(--line);font-size:11px;color:var(--muted)}.operation-card-actions{display:flex;gap:6px;margin-top:10px}.operation-card-actions button{flex:1;border:0;border-radius:10px;padding:8px;font-weight:800}
+  .finance-summary{grid-template-columns:1fr 1fr}.finance-summary strong{font-size:16px}.backup-grid{grid-template-columns:1fr}.toast{left:10px;right:10px;text-align:center}
+}
+@media(max-width:390px){.category-grid{grid-template-columns:repeat(2,1fr)}.stats-grid{grid-template-columns:1fr 1fr}.finance-summary{grid-template-columns:1fr 1fr}}
+
+
+/* ===== v3.1 FIXES ===== */
+
+/* Hijri date is intentionally very visible under Gregorian date */
+.hijri-preview{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  min-height:54px;
+  margin-top:3px;
+  padding:10px 13px;
+  border:1.5px solid #c8dfd3;
+  background:linear-gradient(135deg,#eef8f3,#e4f3eb);
+  border-radius:14px;
+  color:#245b45;
+}
+.hijri-preview span{
+  font-size:10px;
+  font-weight:800;
+  color:#5c7268;
+}
+.hijri-preview strong{
+  font-size:13px;
+  font-weight:800;
+  color:#174f38;
+  text-align:left;
+}
+
+/* iPhone-style destructive confirmation */
+.ios-dialog{
+  border:0;
+  padding:0;
+  width:min(390px,calc(100% - 28px));
+  max-width:390px;
+  border-radius:24px;
+  background:transparent;
+}
+.ios-dialog::backdrop{
+  background:rgba(17,25,22,.48);
+  backdrop-filter:blur(5px);
+  -webkit-backdrop-filter:blur(5px);
+}
+.delete-dialog-card{
+  margin:0;
+  padding:24px 20px 18px;
+  background:rgba(255,253,250,.98);
+  border-radius:24px;
+  text-align:center;
+  box-shadow:0 28px 80px rgba(20,30,25,.26);
+}
+.delete-dialog-icon{
+  width:60px;
+  height:60px;
+  margin:0 auto 13px;
+  display:grid;
+  place-items:center;
+  border-radius:20px;
+  background:#fff0ef;
+  color:#c64e4e;
+  font-size:26px;
+}
+.delete-dialog-card h3{
+  margin:0;
+  font-size:21px;
+  color:#222a27;
+}
+.delete-dialog-card>p{
+  margin:7px 0 0;
+  color:#727c77;
+  font-size:12px;
+}
+.delete-summary{
+  margin:16px 0;
+  padding:12px;
+  border:1px solid #eee5dc;
+  border-radius:14px;
+  background:#faf7f2;
+  text-align:right;
+  font-size:12px;
+  line-height:1.7;
+}
+.delete-summary strong{
+  display:block;
+  font-size:16px;
+  color:#202824;
+  direction:ltr;
+  text-align:right;
+}
+.delete-dialog-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+}
+.delete-dialog-actions button{
+  min-height:48px;
+  border:0;
+  border-radius:14px;
+  font-weight:800;
+  font-size:14px;
+}
+.delete-cancel-btn{
+  background:#efede8;
+  color:#343c38;
+}
+.delete-confirm-btn{
+  background:linear-gradient(135deg,#d84e4e,#b93636);
+  color:#fff;
+  box-shadow:0 8px 18px rgba(198,78,78,.18);
+}
+
+/* Make selected Gregorian month title easy to read */
+.period-title strong{
+  color:#202925;
+  font-weight:800;
+}
+.period-title span{
+  color:#68746f;
+}
+
+@media(max-width:650px){
+  .hijri-preview{
+    min-height:58px;
+    padding:10px 11px;
+    display:block;
+  }
+  .hijri-preview span{
+    display:block;
+    margin-bottom:4px;
+  }
+  .hijri-preview strong{
+    display:block;
+    text-align:right;
+    font-size:13px;
+  }
+}
+
+
+/* ===== v3.3: Hijri-first statistics + bulletproof currency order ===== */
+
+.period-title{
+  min-width:230px;
+  text-align:center;
+}
+.period-title strong{
+  display:block;
+  color:#202925;
+  font-size:14px;
+  font-weight:800;
+}
+.period-gregorian-hint{
+  display:block;
+  margin-top:3px;
+  color:#587067;
+  font-size:9px;
+  font-weight:700;
+}
+
+/* Never let RTL bidi reorder amount/currency.
+   We control the visual order using flex instead of text direction. */
+.money-value{
+  display:inline-flex;
+  direction:ltr;
+  unicode-bidi:isolate;
+  align-items:baseline;
+  gap:.28em;
+  white-space:nowrap;
+}
+.money-number{
+  direction:ltr;
+  unicode-bidi:isolate;
+}
+.money-currency{
+  direction:rtl;
+  unicode-bidi:isolate;
+}
+
+/* Parent values should not force their own bidi ordering */
+.stat-card strong,
+.finance-summary strong,
+.latest-item strong,
+.rank-item>strong,
+.operation-card-top>strong,
+td strong{
+  direction:rtl !important;
+  unicode-bidi:normal !important;
+}
+
+/* API status for Hijri conversion */
+.hijri-api-status{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  margin-top:5px;
+  padding:4px 7px;
+  border-radius:999px;
+  background:#eef7f2;
+  color:#3b6e58;
+  font-size:9px;
+  font-weight:700;
+}
+.hijri-api-status::before{
+  content:"";
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#2ca472;
+}
+
+@media(max-width:650px){
+  .period-title{
+    min-width:155px;
+    max-width:180px;
+  }
+  .period-title strong{
+    font-size:12px;
+  }
+  .period-gregorian-hint{
+    font-size:8px;
+  }
+}
+
+
+/* ============================================================
+   v3.8 — FORCED MONEY GEOMETRY
+   Desired visual placement in Arabic:
+       LEFT: ر.س     RIGHT: 500
+   so it reads naturally as: 500 ر.س
+
+   This does not depend on RTL/Bidi ordering at all.
+   ============================================================ */
+
+.money-force{
+  display:inline-grid !important;
+
+  /* Physical columns from LEFT to RIGHT */
+  grid-template-columns:max-content max-content !important;
+  grid-template-areas:"currency number" !important;
+
+  direction:ltr !important;
+  unicode-bidi:isolate !important;
+  writing-mode:horizontal-tb !important;
+
+  align-items:baseline !important;
+  justify-items:start !important;
+  column-gap:5px !important;
+  white-space:nowrap !important;
+
+  width:max-content !important;
+  min-width:0 !important;
+  max-width:none !important;
+
+  float:none !important;
+  position:relative !important;
+  transform:none !important;
+}
+
+.money-force-currency{
+  grid-area:currency !important;
+  display:block !important;
+  direction:rtl !important;
+  unicode-bidi:isolate !important;
+  order:initial !important;
+
+  position:static !important;
+  float:none !important;
+  transform:none !important;
+  margin:0 !important;
+  padding:0 !important;
+
+  text-align:left !important;
+  white-space:nowrap !important;
+}
+
+.money-force-number{
+  grid-area:number !important;
+  display:block !important;
+  direction:ltr !important;
+  unicode-bidi:isolate !important;
+  order:initial !important;
+
+  position:static !important;
+  float:none !important;
+  transform:none !important;
+  margin:0 !important;
+  padding:0 !important;
+
+  text-align:left !important;
+  white-space:nowrap !important;
+  font-variant-numeric:tabular-nums;
+}
+
+/* The parent places the WHOLE amount at the right of the Arabic card.
+   Internal geometry remains [currency][number] from left to right. */
+#salesTotal,
+#expensesTotal,
+#netTotal,
+#finSales,
+#finExpenses,
+#finNet,
+#finAvgSale,
+#finAvgExpense{
+  display:block !important;
+  text-align:right !important;
+  direction:rtl !important;
+}
+
+/* Value colors only; card backgrounds remain white. */
+.money-green .money-force{color:#17845a !important;}
+.money-orange .money-force{color:#df7b34 !important;}
+.money-blue .money-force{color:#4d72c8 !important;}
+
+/* Finance cards stay exactly the clean white design. */
+.finance-summary article{
+  background:#fff !important;
+  border:1px solid var(--line) !important;
+}
+.finance-summary article > strong{
+  background:transparent !important;
+}
+
+/* Kill any broad inherited span behavior that could disturb the two cells. */
+.money-force,
+.money-force *{
+  box-sizing:border-box !important;
+  opacity:1 !important;
+}
+
+@media(max-width:650px){
+  .money-force{column-gap:4px !important;}
+}
+
+
+/* ============================================================
+   v3.9 — SAUDI RIYAL SYMBOL IMAGE
+   Currency image stays in the LEFT cell.
+   Number stays physically on the RIGHT.
+   ============================================================ */
+
+.money-force-currency{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  height:1em !important;
+  line-height:1 !important;
+}
+
+.riyal-symbol{
+  display:block !important;
+  width:auto !important;
+  height:.78em !important;
+  max-width:1.05em !important;
+  object-fit:contain !important;
+  flex:none !important;
+  margin:0 !important;
+  padding:0 !important;
+  transform:none !important;
+  opacity:1 !important;
+  filter:none !important;
+}
+
+/* Slight visual tuning for larger stat/finance values. */
+.stat-value .riyal-symbol,
+.finance-summary strong .riyal-symbol,
+.finance-grid strong .riyal-symbol{
+  height:.82em !important;
+}
+
+
+/* ============================================================
+   v4.0 — LARGER HOME + FINANCE STAT TYPOGRAPHY
+   ============================================================ */
+
+/* Home statistics: slightly larger titles and values */
+.stat-card .stat-title{
+  font-size:14px !important;
+  line-height:1.45 !important;
+  font-weight:800 !important;
+}
+
+.stat-card .stat-value{
+  font-size:27px !important;
+  line-height:1.25 !important;
+  font-weight:900 !important;
+  margin-top:10px !important;
+}
+
+.stat-card #birdsTotal{
+  font-size:27px !important;
+}
+
+.stat-card #birdsPieces{
+  font-size:11px !important;
+  margin-top:7px !important;
+}
+
+/* Finance: larger cards/text while retaining white backgrounds */
+.finance-grid article,
+.finance-summary article{
+  padding:20px !important;
+  min-height:112px !important;
+}
+
+.finance-grid article > span,
+.finance-summary article > span{
+  font-size:14px !important;
+  line-height:1.45 !important;
+  font-weight:800 !important;
+  color:#454f4a !important;
+}
+
+.finance-grid article > strong,
+.finance-summary article > strong{
+  font-size:27px !important;
+  line-height:1.25 !important;
+  font-weight:900 !important;
+  margin-top:10px !important;
+}
+
+/* Finance numbers only are colored */
+#finSales{color:#17845a !important;}
+#finExpenses{color:#df7b34 !important;}
+#finNet{color:#4d72c8 !important;}
+#finAvgSale{color:#17845a !important;}
+#finAvgExpense{color:#df7b34 !important;}
+#finRatio,
+#finExpenseRatio{color:#765ac2 !important;}
+
+/* Riyal icon follows the enlarged number naturally */
+.finance-grid strong .riyal-symbol,
+.finance-summary strong .riyal-symbol,
+.stat-value .riyal-symbol{
+  height:.80em !important;
+}
+
+@media(max-width:650px){
+  .stat-card .stat-title{
+    font-size:12.5px !important;
+  }
+  .stat-card .stat-value,
+  .stat-card #birdsTotal{
+    font-size:21px !important;
+  }
+
+  .finance-grid article,
+  .finance-summary article{
+    padding:15px !important;
+    min-height:100px !important;
+  }
+  .finance-grid article > span,
+  .finance-summary article > span{
+    font-size:12px !important;
+  }
+  .finance-grid article > strong,
+  .finance-summary article > strong{
+    font-size:21px !important;
+  }
+}
+
+
+/* ============================================================
+   v4.1 — HARD OVERRIDE
+   These selectors intentionally target the exact IDs/classes
+   in index.html and come LAST in the stylesheet.
+   ============================================================ */
+
+/* HOME — exact elements */
+#page-home .stats-grid .stat-card{
+  padding:22px !important;
+  min-height:175px !important;
+}
+
+#page-home .stats-grid .stat-card > .stat-title{
+  font-size:16px !important;
+  line-height:1.5 !important;
+  font-weight:900 !important;
+  color:#414a46 !important;
+}
+
+#page-home #salesTotal,
+#page-home #expensesTotal,
+#page-home #netTotal,
+#page-home #birdsTotal{
+  font-size:32px !important;
+  line-height:1.2 !important;
+  font-weight:900 !important;
+  margin-top:12px !important;
+}
+
+/* The money component itself must inherit the enlarged size */
+#page-home #salesTotal .money-force,
+#page-home #expensesTotal .money-force,
+#page-home #netTotal .money-force{
+  font-size:32px !important;
+  font-weight:900 !important;
+}
+
+/* FINANCE — exact page/elements */
+#page-finance .finance-grid{
+  gap:14px !important;
+}
+
+#page-finance .finance-grid > article{
+  padding:24px !important;
+  min-height:135px !important;
+  border-radius:20px !important;
+}
+
+#page-finance .finance-grid > article > span{
+  font-size:16px !important;
+  line-height:1.5 !important;
+  font-weight:900 !important;
+  color:#414a46 !important;
+}
+
+#page-finance #finSales,
+#page-finance #finExpenses,
+#page-finance #finNet,
+#page-finance #finAvgSale,
+#page-finance #finAvgExpense,
+#page-finance #finRatio{
+  font-size:32px !important;
+  line-height:1.2 !important;
+  font-weight:900 !important;
+  margin-top:13px !important;
+}
+
+/* Force the nested money renderer to the same size */
+#page-finance #finSales .money-force,
+#page-finance #finExpenses .money-force,
+#page-finance #finNet .money-force,
+#page-finance #finAvgSale .money-force,
+#page-finance #finAvgExpense .money-force{
+  font-size:32px !important;
+  font-weight:900 !important;
+}
+
+/* Exact value colors */
+#page-finance #finSales,
+#page-finance #finSales .money-force{color:#17845a !important;}
+
+#page-finance #finExpenses,
+#page-finance #finExpenses .money-force{color:#df7b34 !important;}
+
+#page-finance #finNet,
+#page-finance #finNet .money-force{color:#4d72c8 !important;}
+
+#page-finance #finAvgSale,
+#page-finance #finAvgSale .money-force{color:#17845a !important;}
+
+#page-finance #finAvgExpense,
+#page-finance #finAvgExpense .money-force{color:#df7b34 !important;}
+
+#page-finance #finRatio{color:#765ac2 !important;}
+
+/* iPhone — still visibly larger than the previous version */
+@media(max-width:650px){
+  #page-home .stats-grid .stat-card{
+    padding:17px !important;
+    min-height:150px !important;
+  }
+
+  #page-home .stats-grid .stat-card > .stat-title{
+    font-size:14px !important;
+  }
+
+  #page-home #salesTotal,
+  #page-home #expensesTotal,
+  #page-home #netTotal,
+  #page-home #birdsTotal,
+  #page-home #salesTotal .money-force,
+  #page-home #expensesTotal .money-force,
+  #page-home #netTotal .money-force{
+    font-size:25px !important;
+  }
+
+  #page-finance .finance-grid > article{
+    padding:18px !important;
+    min-height:115px !important;
+  }
+
+  #page-finance .finance-grid > article > span{
+    font-size:14px !important;
+  }
+
+  #page-finance #finSales,
+  #page-finance #finExpenses,
+  #page-finance #finNet,
+  #page-finance #finAvgSale,
+  #page-finance #finAvgExpense,
+  #page-finance #finRatio,
+  #page-finance #finSales .money-force,
+  #page-finance #finExpenses .money-force,
+  #page-finance #finNet .money-force,
+  #page-finance #finAvgSale .money-force,
+  #page-finance #finAvgExpense .money-force{
+    font-size:25px !important;
+  }
+}
+
+
+/* ============================================================
+   v4.2 — FINANCE STATS MATCH HOME EXACTLY
+   Same visual rhythm as home statistics:
+   same padding, title size, value size, weight and spacing.
+   ============================================================ */
+
+/* Desktop — finance cards match home cards */
+#page-finance .finance-grid > article{
+  padding:22px !important;
+  min-height:175px !important;
+  border-radius:20px !important;
+  background:#fff !important;
+  border:1px solid var(--line) !important;
+  box-shadow:var(--shadow) !important;
+}
+
+#page-finance .finance-grid > article > span{
+  display:block !important;
+  font-size:16px !important;
+  line-height:1.5 !important;
+  font-weight:900 !important;
+  color:#414a46 !important;
+}
+
+#page-finance #finSales,
+#page-finance #finExpenses,
+#page-finance #finNet,
+#page-finance #finAvgSale,
+#page-finance #finAvgExpense,
+#page-finance #finRatio{
+  display:block !important;
+  font-size:32px !important;
+  line-height:1.2 !important;
+  font-weight:900 !important;
+  margin-top:12px !important;
+  text-align:right !important;
+}
+
+/* Nested money renderer gets the exact same size as home */
+#page-finance #finSales .money-force,
+#page-finance #finExpenses .money-force,
+#page-finance #finNet .money-force,
+#page-finance #finAvgSale .money-force,
+#page-finance #finAvgExpense .money-force{
+  font-size:32px !important;
+  font-weight:900 !important;
+  line-height:1.2 !important;
+}
+
+/* Keep only the numbers colored */
+#page-finance #finSales,
+#page-finance #finSales .money-force{color:#17845a !important;}
+
+#page-finance #finExpenses,
+#page-finance #finExpenses .money-force{color:#df7b34 !important;}
+
+#page-finance #finNet,
+#page-finance #finNet .money-force{color:#4d72c8 !important;}
+
+#page-finance #finAvgSale,
+#page-finance #finAvgSale .money-force{color:#17845a !important;}
+
+#page-finance #finAvgExpense,
+#page-finance #finAvgExpense .money-force{color:#df7b34 !important;}
+
+#page-finance #finRatio{color:#765ac2 !important;}
+
+/* iPhone — match home exactly */
+@media(max-width:650px){
+  #page-finance .finance-grid > article{
+    padding:17px !important;
+    min-height:150px !important;
+    border-radius:17px !important;
+  }
+
+  #page-finance .finance-grid > article > span{
+    font-size:14px !important;
+    line-height:1.5 !important;
+    font-weight:900 !important;
+  }
+
+  #page-finance #finSales,
+  #page-finance #finExpenses,
+  #page-finance #finNet,
+  #page-finance #finAvgSale,
+  #page-finance #finAvgExpense,
+  #page-finance #finRatio,
+  #page-finance #finSales .money-force,
+  #page-finance #finExpenses .money-force,
+  #page-finance #finNet .money-force,
+  #page-finance #finAvgSale .money-force,
+  #page-finance #finAvgExpense .money-force{
+    font-size:25px !important;
+    line-height:1.2 !important;
+    font-weight:900 !important;
+  }
+}
+
+
+/* ============================================================
+   v4.3 — ACTUAL FINANCE MARKUP FIX
+   Actual HTML: .finance-summary + #finExpenseRatio
+   Match HOME stats sizing exactly.
+   ============================================================ */
+
+#page-finance .finance-summary{
+  gap:12px !important;
+}
+
+#page-finance .finance-summary > article{
+  padding:22px !important;
+  min-height:175px !important;
+  border-radius:20px !important;
+  background:#fff !important;
+  border:1px solid var(--line) !important;
+  box-shadow:var(--shadow) !important;
+}
+
+#page-finance .finance-summary > article > span{
+  display:block !important;
+  font-size:16px !important;
+  line-height:1.5 !important;
+  font-weight:900 !important;
+  color:#414a46 !important;
+}
+
+#page-finance .finance-summary > article > strong,
+#page-finance #finSales,
+#page-finance #finExpenses,
+#page-finance #finNet,
+#page-finance #finAvgSale,
+#page-finance #finAvgExpense,
+#page-finance #finExpenseRatio{
+  display:block !important;
+  font-size:32px !important;
+  line-height:1.2 !important;
+  font-weight:900 !important;
+  margin-top:12px !important;
+  text-align:right !important;
+}
+
+/* Exact nested renderer */
+#page-finance .finance-summary #finSales .money-force,
+#page-finance .finance-summary #finExpenses .money-force,
+#page-finance .finance-summary #finNet .money-force,
+#page-finance .finance-summary #finAvgSale .money-force,
+#page-finance .finance-summary #finAvgExpense .money-force{
+  font-size:32px !important;
+  line-height:1.2 !important;
+  font-weight:900 !important;
+}
+
+/* Values only colored */
+#page-finance #finSales,
+#page-finance #finSales .money-force{color:#17845a !important;}
+#page-finance #finExpenses,
+#page-finance #finExpenses .money-force{color:#df7b34 !important;}
+#page-finance #finNet,
+#page-finance #finNet .money-force{color:#4d72c8 !important;}
+#page-finance #finAvgSale,
+#page-finance #finAvgSale .money-force{color:#17845a !important;}
+#page-finance #finAvgExpense,
+#page-finance #finAvgExpense .money-force{color:#df7b34 !important;}
+#page-finance #finExpenseRatio{color:#765ac2 !important;}
+
+/* iPhone = exact same sizes as current HOME cards */
+@media(max-width:650px){
+  #page-finance .finance-summary > article{
+    padding:17px !important;
+    min-height:150px !important;
+    border-radius:17px !important;
+  }
+
+  #page-finance .finance-summary > article > span{
+    font-size:14px !important;
+    line-height:1.5 !important;
+    font-weight:900 !important;
+  }
+
+  #page-finance .finance-summary > article > strong,
+  #page-finance #finSales,
+  #page-finance #finExpenses,
+  #page-finance #finNet,
+  #page-finance #finAvgSale,
+  #page-finance #finAvgExpense,
+  #page-finance #finExpenseRatio,
+  #page-finance .finance-summary #finSales .money-force,
+  #page-finance .finance-summary #finExpenses .money-force,
+  #page-finance .finance-summary #finNet .money-force,
+  #page-finance .finance-summary #finAvgSale .money-force,
+  #page-finance .finance-summary #finAvgExpense .money-force{
+    font-size:25px !important;
+    line-height:1.2 !important;
+    font-weight:900 !important;
+  }
+}
+
+
+/* ============================================================
+   v4.4 — FINANCE USES THE EXACT SAME CARD COMPONENT AS HOME
+   No finance-summary component anymore.
+   ============================================================ */
+
+#page-finance .finance-stats-grid{
+  grid-template-columns:repeat(3,1fr) !important;
+  gap:12px !important;
+  margin-top:14px !important;
+}
+
+/* EXACT same typography as the current HOME statistics */
+#page-finance .finance-stats-grid .stat-card{
+  padding:22px !important;
+  min-height:175px !important;
+  border-radius:20px !important;
+}
+
+#page-finance .finance-stats-grid .stat-card > .stat-title{
+  font-size:16px !important;
+  line-height:1.5 !important;
+  font-weight:900 !important;
+  color:#414a46 !important;
+}
+
+#page-finance .finance-stats-grid #finSales,
+#page-finance .finance-stats-grid #finExpenses,
+#page-finance .finance-stats-grid #finNet,
+#page-finance .finance-stats-grid #finAvgSale,
+#page-finance .finance-stats-grid #finAvgExpense,
+#page-finance .finance-stats-grid #finExpenseRatio{
+  font-size:32px !important;
+  line-height:1.2 !important;
+  font-weight:900 !important;
+  margin-top:12px !important;
+}
+
+/* Same nested money renderer size as HOME */
+#page-finance .finance-stats-grid #finSales .money-force,
+#page-finance .finance-stats-grid #finExpenses .money-force,
+#page-finance .finance-stats-grid #finNet .money-force,
+#page-finance .finance-stats-grid #finAvgSale .money-force,
+#page-finance .finance-stats-grid #finAvgExpense .money-force{
+  font-size:32px !important;
+  line-height:1.2 !important;
+  font-weight:900 !important;
+}
+
+/* Colors: values only */
+#finSales,#finSales .money-force{color:#17845a !important;}
+#finExpenses,#finExpenses .money-force{color:#df7b34 !important;}
+#finNet,#finNet .money-force{color:#4d72c8 !important;}
+#finAvgSale,#finAvgSale .money-force{color:#17845a !important;}
+#finAvgExpense,#finAvgExpense .money-force{color:#df7b34 !important;}
+#finExpenseRatio{color:#765ac2 !important;}
+
+@media(max-width:900px){
+  #page-finance .finance-stats-grid{
+    grid-template-columns:repeat(2,1fr) !important;
+  }
+}
+
+@media(max-width:650px){
+  #page-finance .finance-stats-grid .stat-card{
+    padding:17px !important;
+    min-height:150px !important;
+    border-radius:17px !important;
+  }
+
+  #page-finance .finance-stats-grid .stat-card > .stat-title{
+    font-size:14px !important;
+  }
+
+  #page-finance .finance-stats-grid #finSales,
+  #page-finance .finance-stats-grid #finExpenses,
+  #page-finance .finance-stats-grid #finNet,
+  #page-finance .finance-stats-grid #finAvgSale,
+  #page-finance .finance-stats-grid #finAvgExpense,
+  #page-finance .finance-stats-grid #finExpenseRatio,
+  #page-finance .finance-stats-grid #finSales .money-force,
+  #page-finance .finance-stats-grid #finExpenses .money-force,
+  #page-finance .finance-stats-grid #finNet .money-force,
+  #page-finance .finance-stats-grid #finAvgSale .money-force,
+  #page-finance .finance-stats-grid #finAvgExpense .money-force{
+    font-size:25px !important;
+    line-height:1.2 !important;
+    font-weight:900 !important;
+  }
+}

@@ -1,0 +1,842 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#17392f" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Bird" />
+    <title>Bird — إدارة المبيعات والمصروفات</title>
+
+    <link rel="icon" type="image/jpeg" href="./icon.jpeg" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="./apple-touch-icon.png"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="./style.css?v=4.4.20260815" />
+  </head>
+  <body>
+    <svg class="svg-sprite" aria-hidden="true">
+      <symbol id="i-home" viewBox="0 0 24 24">
+        <path
+          d="M3 11.5 12 4l9 7.5v8a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-8Z"
+        />
+      </symbol>
+      <symbol id="i-wallet" viewBox="0 0 24 24">
+        <path
+          d="M4 6.5h13a2 2 0 0 1 2 2v9H5a2 2 0 0 1-2-2v-11a2 2 0 0 1 2-2h11v4H4m11 5h6v4h-6a2 2 0 1 1 0-4Z"
+        />
+      </symbol>
+      <symbol id="i-up" viewBox="0 0 24 24">
+        <path d="M5 15 12 8l7 7M12 8v11" />
+      </symbol>
+      <symbol id="i-down" viewBox="0 0 24 24">
+        <path d="m5 9 7 7 7-7M12 5v11" />
+      </symbol>
+      <symbol id="i-list" viewBox="0 0 24 24">
+        <path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01" />
+      </symbol>
+      <symbol id="i-search" viewBox="0 0 24 24">
+        <path d="m21 21-4.35-4.35M19 11a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z" />
+      </symbol>
+      <symbol id="i-calendar" viewBox="0 0 24 24">
+        <path
+          d="M6 3v3M18 3v3M4 8h16M5 5h14a1 1 0 0 1 1 1v14H4V6a1 1 0 0 1 1-1Z"
+        />
+      </symbol>
+      <symbol id="i-edit" viewBox="0 0 24 24">
+        <path
+          d="m4 16.5-.8 4.3 4.3-.8L18.8 8.7l-3.5-3.5L4 16.5ZM13.8 6.7l3.5 3.5"
+        />
+      </symbol>
+      <symbol id="i-trash" viewBox="0 0 24 24">
+        <path d="M4 7h16M9 3h6l1 4H8l1-4Zm-2 4 1 14h8l1-14M10 11v6M14 11v6" />
+      </symbol>
+      <symbol id="i-logout" viewBox="0 0 24 24">
+        <path d="M10 5H5v14h5M14 8l4 4-4 4M8 12h10" />
+      </symbol>
+      <symbol id="i-user" viewBox="0 0 24 24">
+        <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm7 9a7 7 0 0 0-14 0" />
+      </symbol>
+      <symbol id="i-lock" viewBox="0 0 24 24">
+        <path d="M7 10V8a5 5 0 0 1 10 0v2M5 10h14v11H5V10Z" />
+      </symbol>
+      <symbol id="i-download" viewBox="0 0 24 24">
+        <path d="M12 3v12m0 0 5-5m-5 5-5-5M5 20h14" />
+      </symbol>
+      <symbol id="i-upload" viewBox="0 0 24 24">
+        <path d="M12 17V5m0 0 5 5m-5-5-5 5M5 20h14" />
+      </symbol>
+      <symbol id="i-shield" viewBox="0 0 24 24">
+        <path
+          d="M12 3 5 6v5c0 4.7 2.7 8.2 7 10 4.3-1.8 7-5.3 7-10V6l-7-3Zm-3 9 2 2 4-4"
+        />
+      </symbol>
+      <symbol id="i-chart" viewBox="0 0 24 24">
+        <path d="M5 20V10M12 20V4M19 20v-7M3 20h18" />
+      </symbol>
+      <symbol id="i-note" viewBox="0 0 24 24">
+        <path d="M5 3h14v18H5V3Zm4 5h6M9 12h6M9 16h4" />
+      </symbol>
+      <symbol id="i-check" viewBox="0 0 24 24">
+        <path d="m5 12 4 4 10-10" />
+      </symbol>
+      <symbol id="i-back" viewBox="0 0 24 24">
+        <path d="M19 12H5m0 0 5-5m-5 5 5 5" />
+      </symbol>
+      <symbol id="i-chevron-right" viewBox="0 0 24 24">
+        <path d="m9 5 7 7-7 7" />
+      </symbol>
+      <symbol id="i-chevron-left" viewBox="0 0 24 24">
+        <path d="m15 5-7 7 7 7" />
+      </symbol>
+    </svg>
+
+    <div id="toast" class="toast" hidden></div>
+
+    <!-- LOGIN -->
+    <section id="authView" class="auth-shell">
+      <div class="orb orb1"></div>
+      <div class="orb orb2"></div>
+      <div class="auth-card">
+        <div class="brand-row">
+          <img class="brand-image" src="./icon.jpeg" alt="Bird" />
+          <div>
+            <h1>Bird</h1>
+          </div>
+        </div>
+
+        <div class="login-copy">
+          <h2>حيّاك الله</h2>
+        </div>
+
+        <form id="loginForm" class="login-form">
+          <label class="field">
+            <span>اسم المستخدم</span>
+            <div class="input-shell">
+              <svg><use href="#i-user"></use></svg>
+              <input
+                id="username"
+                autocomplete="username"
+                required
+                placeholder="اسم المستخدم"
+              />
+            </div>
+          </label>
+
+          <label class="field">
+            <span>كلمة المرور</span>
+            <div class="input-shell">
+              <svg><use href="#i-lock"></use></svg>
+              <input
+                id="password"
+                type="password"
+                inputmode="numeric"
+                autocomplete="current-password"
+                required
+                placeholder="••••••••"
+              />
+            </div>
+          </label>
+
+          <button id="loginBtn" class="btn primary big" type="submit">
+            دخول <span>←</span>
+          </button>
+        </form>
+        <p id="loginError" class="error-box" hidden></p>
+      </div>
+    </section>
+
+    <!-- APP -->
+    <div id="appView" hidden>
+      <header class="topbar">
+        <div class="topbar-inner">
+          <button class="brand-button" data-route="home">
+            <img src="./icon.jpeg" class="mini-brand-image" alt="" />
+            <div><strong>Bird</strong></div>
+          </button>
+
+          <div class="topbar-actions">
+            <div class="account-chip">
+              <div class="avatar">
+                <svg><use href="#i-user"></use></svg>
+              </div>
+              <div>
+                <strong id="accountName">—</strong
+                ><small id="accountRole">—</small>
+              </div>
+            </div>
+            <button id="logoutBtn" class="icon-btn" title="تسجيل خروج">
+              <svg><use href="#i-logout"></use></svg>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <nav class="quick-nav">
+        <div class="quick-nav-inner">
+          <button class="nav-pill active" data-route="home">
+            <svg><use href="#i-home"></use></svg><span>الرئيسية</span>
+          </button>
+          <button
+            id="saleNav"
+            class="nav-pill editor-only"
+            data-route="sale"
+            hidden
+          >
+            <svg><use href="#i-up"></use></svg><span>بيع</span>
+          </button>
+          <button
+            id="expenseNav"
+            class="nav-pill editor-only"
+            data-route="expense"
+            hidden
+          >
+            <svg><use href="#i-down"></use></svg><span>مصروف</span>
+          </button>
+          <button class="nav-pill" data-route="records">
+            <svg><use href="#i-list"></use></svg><span>السجل</span>
+          </button>
+          <button id="financeNav" class="nav-pill" data-route="finance">
+            <svg><use href="#i-chart"></use></svg><span>الوضع المالي</span>
+          </button>
+          <button
+            id="backupNav"
+            class="nav-pill admin-only"
+            data-route="backup"
+            hidden
+          >
+            <svg><use href="#i-shield"></use></svg><span>النسخ الاحتياطية</span>
+          </button>
+        </div>
+      </nav>
+
+      <!-- PERIOD NAV -->
+      <section id="periodBar" class="period-shell">
+        <div class="period-inner">
+          <button
+            id="prevMonthBtn"
+            class="period-arrow"
+            aria-label="الشهر السابق"
+          >
+            <svg><use href="#i-chevron-right"></use></svg>
+          </button>
+          <div class="period-title">
+            <span id="periodCaption">إحصائيات الشهر الهجري</span>
+            <strong id="periodLabel">—</strong>
+            <small id="periodGregorianHint" class="period-gregorian-hint"
+              >حسب تقويم أم القرى</small
+            >
+          </div>
+          <button
+            id="nextMonthBtn"
+            class="period-arrow"
+            aria-label="الشهر التالي"
+          >
+            <svg><use href="#i-chevron-left"></use></svg>
+          </button>
+          <button id="allTimeBtn" class="all-time-btn">من البداية</button>
+        </div>
+      </section>
+
+      <main class="container">
+        <!-- HOME -->
+        <section id="page-home" class="page active">
+          <section class="hero">
+            <div>
+              <span class="hero-kicker">ملخص الفترة</span>
+              <h1 id="welcomeTitle">أهلاً وسهلاً</h1>
+              <p id="welcomeText">كل أرقامك المهمة قدامك بشكل واضح.</p>
+            </div>
+            <div class="hero-actions editor-only" id="heroActions" hidden>
+              <button class="hero-btn sale" data-route="sale">
+                <svg><use href="#i-up"></use></svg><span>تسجيل بيع</span>
+              </button>
+              <button class="hero-btn expense" data-route="expense">
+                <svg><use href="#i-down"></use></svg><span>تسجيل مصروف</span>
+              </button>
+            </div>
+          </section>
+
+          <section class="stats-grid">
+            <article class="stat-card">
+              <div class="stat-icon green-icon">
+                <svg><use href="#i-up"></use></svg>
+              </div>
+              <span class="stat-title">إجمالي المبيعات</span>
+              <strong id="salesTotal" class="money-green"></strong>
+              <small>للفترة المختارة</small>
+            </article>
+
+            <article class="stat-card">
+              <div class="stat-icon orange-icon">
+                <svg><use href="#i-down"></use></svg>
+              </div>
+              <span class="stat-title">إجمالي المصروفات</span>
+              <strong id="expensesTotal" class="money-orange"></strong>
+              <small>للفترة المختارة</small>
+            </article>
+
+            <article class="stat-card">
+              <div class="stat-icon blue-icon">
+                <svg><use href="#i-wallet"></use></svg>
+              </div>
+              <span class="stat-title">الصافي</span>
+              <strong id="netTotal" class="money-blue"></strong>
+              <small>المبيعات ناقص المصروفات</small>
+            </article>
+
+            <article class="stat-card">
+              <div class="stat-icon purple-icon pigeon-icon">🕊️</div>
+              <span class="stat-title">عدد الحمام المباع</span>
+              <strong id="birdsTotal" class="purple-number">0 جوز</strong>
+              <small id="birdsPieces">0 حبة</small>
+            </article>
+          </section>
+
+          <section class="panel">
+            <div class="panel-head">
+              <div>
+                <span class="kicker">آخر النشاط</span>
+                <h2>آخر العمليات في الفترة</h2>
+              </div>
+              <button class="text-btn" data-route="records">
+                عرض السجل كامل ←
+              </button>
+            </div>
+            <div id="latestList" class="latest-list"></div>
+            <div id="latestEmpty" class="empty-mini" hidden>
+              لا توجد عمليات في هذه الفترة.
+            </div>
+          </section>
+        </section>
+
+        <!-- SALE -->
+        <section id="page-sale" class="page">
+          <div class="page-title">
+            <button class="back-btn" data-route="home">
+              <svg><use href="#i-back"></use></svg>
+            </button>
+            <div class="heading-icon sale-bg">
+              <svg><use href="#i-up"></use></svg>
+            </div>
+            <div>
+              <span class="kicker">صفحة مستقلة</span>
+              <h1 id="salePageTitle">تسجيل بيع</h1>
+              <p>أدخل بيانات البيع ثم احفظ، وبعدها ترجع للرئيسية تلقائيًا.</p>
+            </div>
+          </div>
+
+          <section class="panel form-panel">
+            <div id="saleEditBanner" class="edit-banner" hidden>
+              <div class="edit-banner-icon">
+                <svg><use href="#i-edit"></use></svg>
+              </div>
+              <div>
+                <strong>وضع التعديل مفعّل</strong
+                ><span
+                  >أنت تعدّل عملية بيع موجودة، ولن يتم إنشاء عملية جديدة.</span
+                >
+              </div>
+              <button id="cancelSaleEdit" type="button" class="btn soft">
+                إلغاء التعديل
+              </button>
+            </div>
+
+            <form id="saleForm" class="operation-form">
+              <input id="saleEditingId" type="hidden" />
+
+              <div class="form-grid">
+                <label class="field">
+                  <span>التاريخ الميلادي</span>
+                  <div class="input-shell">
+                    <svg><use href="#i-calendar"></use></svg
+                    ><input id="saleDate" type="date" required />
+                  </div>
+                  <div id="saleHijriPreview" class="hijri-preview">
+                    <span>التاريخ الهجري — أم القرى</span><strong>—</strong>
+                  </div>
+                </label>
+
+                <label class="field">
+                  <span>المبلغ</span>
+                  <div class="input-shell">
+                    <svg><use href="#i-wallet"></use></svg>
+                    <input
+                      id="saleAmount"
+                      type="text"
+                      inputmode="decimal"
+                      autocomplete="off"
+                      required
+                      placeholder="مثال: 1250.50"
+                    />
+                    <b>ر.س</b>
+                  </div>
+                </label>
+
+                <label class="field">
+                  <span>عدد الحمام بالحبات</span>
+                  <div class="input-shell">
+                    <span class="input-emoji">🕊️</span>
+                    <input
+                      id="saleQuantity"
+                      type="text"
+                      inputmode="numeric"
+                      autocomplete="off"
+                      placeholder="مثال: 28"
+                    />
+                  </div>
+                </label>
+
+                <label class="field">
+                  <span>التصنيف <em>اختياري</em></span>
+                  <div class="input-shell">
+                    <svg><use href="#i-note"></use></svg
+                    ><input id="saleCategory" placeholder="مثال: زاجل" />
+                  </div>
+                </label>
+
+                <label class="field full">
+                  <span>ملاحظات <em>اختياري</em></span>
+                  <textarea
+                    id="saleNotes"
+                    rows="4"
+                    placeholder="أي ملاحظة عن عملية البيع"
+                  ></textarea>
+                </label>
+              </div>
+
+              <button
+                id="saleSaveBtn"
+                class="btn primary save-big"
+                type="submit"
+              >
+                <svg><use href="#i-check"></use></svg><span>حفظ البيع</span>
+              </button>
+            </form>
+          </section>
+        </section>
+
+        <!-- EXPENSE -->
+        <section id="page-expense" class="page">
+          <div class="page-title">
+            <button class="back-btn" data-route="home">
+              <svg><use href="#i-back"></use></svg>
+            </button>
+            <div class="heading-icon expense-bg">
+              <svg><use href="#i-down"></use></svg>
+            </div>
+            <div>
+              <span class="kicker">صفحة مستقلة</span>
+              <h1 id="expensePageTitle">تسجيل مصروف</h1>
+              <p>اختر نوع المصروف، أدخل المبلغ واحفظ.</p>
+            </div>
+          </div>
+
+          <section class="panel form-panel">
+            <div
+              id="expenseEditBanner"
+              class="edit-banner expense-banner"
+              hidden
+            >
+              <div class="edit-banner-icon">
+                <svg><use href="#i-edit"></use></svg>
+              </div>
+              <div>
+                <strong>وضع التعديل مفعّل</strong
+                ><span
+                  >أنت تعدّل مصروفًا موجودًا، ولن يتم إنشاء عملية جديدة.</span
+                >
+              </div>
+              <button id="cancelExpenseEdit" type="button" class="btn soft">
+                إلغاء التعديل
+              </button>
+            </div>
+
+            <form id="expenseForm" class="operation-form">
+              <input id="expenseEditingId" type="hidden" />
+
+              <div class="form-grid">
+                <label class="field">
+                  <span>التاريخ الميلادي</span>
+                  <div class="input-shell">
+                    <svg><use href="#i-calendar"></use></svg
+                    ><input id="expenseDate" type="date" required />
+                  </div>
+                  <div id="expenseHijriPreview" class="hijri-preview">
+                    <span>التاريخ الهجري — أم القرى</span><strong>—</strong>
+                  </div>
+                </label>
+
+                <label class="field">
+                  <span>المبلغ</span>
+                  <div class="input-shell">
+                    <svg><use href="#i-wallet"></use></svg>
+                    <input
+                      id="expenseAmount"
+                      type="text"
+                      inputmode="decimal"
+                      autocomplete="off"
+                      required
+                      placeholder="مثال: 350.75"
+                    />
+                    <b>ر.س</b>
+                  </div>
+                </label>
+
+                <div class="field full">
+                  <span>نوع المصروف</span>
+                  <div
+                    id="expenseCategories"
+                    class="category-grid"
+                    role="radiogroup"
+                    aria-label="نوع المصروف"
+                  >
+                    <label class="category-option">
+                      <input
+                        type="radio"
+                        name="expenseCategory"
+                        value="أعلاف"
+                      />
+                      <span><b>🌾</b><em>أعلاف</em></span>
+                    </label>
+                    <label class="category-option">
+                      <input type="radio" name="expenseCategory" value="شبوك" />
+                      <span><b>🧱</b><em>شبوك</em></span>
+                    </label>
+                    <label class="category-option">
+                      <input type="radio" name="expenseCategory" value="علاج" />
+                      <span><b>💊</b><em>علاج</em></span>
+                    </label>
+                    <label class="category-option">
+                      <input type="radio" name="expenseCategory" value="نقل" />
+                      <span><b>🚚</b><em>نقل</em></span>
+                    </label>
+                    <label class="category-option">
+                      <input
+                        type="radio"
+                        name="expenseCategory"
+                        value="صيانة"
+                      />
+                      <span><b>🛠️</b><em>صيانة</em></span>
+                    </label>
+                    <label class="category-option">
+                      <input
+                        type="radio"
+                        name="expenseCategory"
+                        value="نظافة"
+                      />
+                      <span><b>🧹</b><em>نظافة</em></span>
+                    </label>
+                    <label class="category-option">
+                      <input
+                        type="radio"
+                        name="expenseCategory"
+                        value="شراء حمام"
+                      />
+                      <span><b>🕊️</b><em>شراء حمام</em></span>
+                    </label>
+                    <label class="category-option">
+                      <input type="radio" name="expenseCategory" value="أخرى" />
+                      <span><b>🧾</b><em>أخرى</em></span>
+                    </label>
+                  </div>
+                </div>
+
+                <label class="field full">
+                  <span>ملاحظات <em>اختياري</em></span>
+                  <textarea
+                    id="expenseNotes"
+                    rows="4"
+                    placeholder="أي ملاحظة عن المصروف"
+                  ></textarea>
+                </label>
+              </div>
+
+              <button
+                id="expenseSaveBtn"
+                class="btn expense-primary save-big"
+                type="submit"
+              >
+                <svg><use href="#i-check"></use></svg><span>حفظ المصروف</span>
+              </button>
+            </form>
+          </section>
+        </section>
+
+        <!-- RECORDS -->
+        <section id="page-records" class="page">
+          <div class="page-title">
+            <div class="heading-icon sand-bg">
+              <svg><use href="#i-list"></use></svg>
+            </div>
+            <div>
+              <span class="kicker">الفترة المختارة</span>
+              <h1>سجل العمليات</h1>
+              <p id="recordsPeriodText">—</p>
+            </div>
+          </div>
+
+          <section class="panel records-panel">
+            <div class="filters">
+              <select id="filterType">
+                <option value="all">كل العمليات</option>
+                <option value="sale">المبيعات فقط</option>
+                <option value="expense">المصروفات فقط</option>
+              </select>
+              <div class="search-box">
+                <svg><use href="#i-search"></use></svg
+                ><input id="searchInput" type="search" placeholder="بحث..." />
+              </div>
+            </div>
+
+            <div id="loadingState" class="loading">
+              <span></span> جاري تحميل البيانات...
+            </div>
+            <div id="emptyState" class="empty-view" hidden>
+              لا توجد نتائج في هذه الفترة.
+            </div>
+
+            <div class="table-wrap">
+              <table id="operationsTable" hidden>
+                <thead>
+                  <tr>
+                    <th>التاريخ</th>
+                    <th>النوع</th>
+                    <th>المبلغ</th>
+                    <th>العدد</th>
+                    <th>التصنيف</th>
+                    <th>الملاحظات</th>
+                    <th id="actionsHead">الإجراءات</th>
+                  </tr>
+                </thead>
+                <tbody id="operationsBody"></tbody>
+              </table>
+            </div>
+            <div id="operationsCards" class="operations-cards"></div>
+          </section>
+        </section>
+
+        <!-- FINANCE - BOTH ACCOUNTS -->
+        <section id="page-finance" class="page">
+          <div class="page-title">
+            <div class="heading-icon blue-bg">
+              <svg><use href="#i-chart"></use></svg>
+            </div>
+            <div>
+              <span class="kicker">تحليل الفترة</span>
+              <h1>الوضع المالي</h1>
+              <p id="financePeriodText">—</p>
+            </div>
+          </div>
+
+          <section class="stats-grid finance-stats-grid">
+            <article class="stat-card">
+              <div class="stat-icon green-icon">
+                <svg><use href="#i-up"></use></svg>
+              </div>
+              <span class="stat-title">المبيعات</span>
+              <strong id="finSales" class="money-green"></strong>
+              <small>للفترة المختارة</small>
+            </article>
+
+            <article class="stat-card">
+              <div class="stat-icon orange-icon">
+                <svg><use href="#i-down"></use></svg>
+              </div>
+              <span class="stat-title">المصروفات</span>
+              <strong id="finExpenses" class="money-orange"></strong>
+              <small>للفترة المختارة</small>
+            </article>
+
+            <article class="stat-card">
+              <div class="stat-icon blue-icon">
+                <svg><use href="#i-wallet"></use></svg>
+              </div>
+              <span class="stat-title">الصافي</span>
+              <strong id="finNet" class="money-blue"></strong>
+              <small>المبيعات ناقص المصروفات</small>
+            </article>
+
+            <article class="stat-card">
+              <div class="stat-icon green-icon">
+                <svg><use href="#i-up"></use></svg>
+              </div>
+              <span class="stat-title">متوسط البيع</span>
+              <strong id="finAvgSale" class="money-green"></strong>
+              <small>متوسط قيمة عملية البيع</small>
+            </article>
+
+            <article class="stat-card">
+              <div class="stat-icon orange-icon">
+                <svg><use href="#i-down"></use></svg>
+              </div>
+              <span class="stat-title">متوسط المصروف</span>
+              <strong id="finAvgExpense" class="money-orange"></strong>
+              <small>متوسط قيمة عملية الصرف</small>
+            </article>
+
+            <article class="stat-card">
+              <div class="stat-icon purple-icon">
+                <svg><use href="#i-chart"></use></svg>
+              </div>
+              <span class="stat-title">نسبة المصروف للمبيعات</span>
+              <strong id="finExpenseRatio" class="purple-number">0%</strong>
+              <small>النسبة خلال الفترة المختارة</small>
+            </article>
+          </section>
+
+          <section class="charts-grid">
+            <article class="panel chart-card">
+              <div class="panel-head">
+                <div>
+                  <span class="kicker">الحركة المالية</span>
+                  <h2 id="mainChartTitle">المبيعات والمصروفات</h2>
+                </div>
+              </div>
+              <div class="chart-wrap"><canvas id="monthlyChart"></canvas></div>
+            </article>
+            <article class="panel chart-card">
+              <div class="panel-head">
+                <div>
+                  <span class="kicker">التوزيع</span>
+                  <h2>المبيعات مقابل المصروفات</h2>
+                </div>
+              </div>
+              <div class="chart-wrap donut-wrap">
+                <canvas id="mixChart"></canvas>
+              </div>
+            </article>
+          </section>
+
+          <section class="tops-grid">
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <span class="kicker">أعلى القيم</span>
+                  <h2>أكبر 5 عمليات بيع</h2>
+                </div>
+              </div>
+              <div id="topSales" class="rank-list"></div>
+            </article>
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <span class="kicker">أعلى القيم</span>
+                  <h2>أكبر 5 عمليات صرف</h2>
+                </div>
+              </div>
+              <div id="topExpenses" class="rank-list"></div>
+            </article>
+          </section>
+        </section>
+
+        <!-- BACKUP ADMIN ONLY -->
+        <section id="page-backup" class="page">
+          <div class="page-title">
+            <div class="heading-icon blue-bg">
+              <svg><use href="#i-shield"></use></svg>
+            </div>
+            <div>
+              <span class="kicker">خاص بحساب الإدارة</span>
+              <h1>النسخ الاحتياطية</h1>
+              <p>تنزيل نسخة JSON أو استعادة نسخة سابقة.</p>
+            </div>
+          </div>
+
+          <section class="panel">
+            <div class="backup-grid">
+              <button id="exportBtn" class="backup-card">
+                <span class="backup-icon green"
+                  ><svg><use href="#i-download"></use></svg
+                ></span>
+                <span
+                  ><strong>تنزيل نسخة JSON</strong
+                  ><small>كل البيانات في ملف واحد</small></span
+                >
+              </button>
+
+              <label class="backup-card">
+                <input
+                  id="importFile"
+                  type="file"
+                  accept=".json,application/json"
+                />
+                <span class="backup-icon blue"
+                  ><svg><use href="#i-upload"></use></svg
+                ></span>
+                <span
+                  ><strong>استعادة نسخة JSON</strong
+                  ><small>استبدال البيانات بنسخة سابقة</small></span
+                >
+              </label>
+            </div>
+          </section>
+        </section>
+      </main>
+
+      <div class="made-with-love">
+        <span>صنع بحب من عماد</span>
+        <span class="heart">❤</span>
+      </div>
+    </div>
+
+    <dialog id="deleteDialog" class="ios-dialog">
+      <form method="dialog" class="delete-dialog-card">
+        <div class="delete-dialog-icon">
+          <svg><use href="#i-trash"></use></svg>
+        </div>
+        <h3>حذف العملية؟</h3>
+        <p id="deleteDialogText">سيتم حذف هذه العملية نهائيًا.</p>
+
+        <div id="deleteDialogSummary" class="delete-summary"></div>
+
+        <div class="delete-dialog-actions">
+          <button id="cancelDeleteBtn" value="cancel" class="delete-cancel-btn">
+            إلغاء
+          </button>
+          <button
+            id="confirmDeleteBtn"
+            value="default"
+            class="delete-confirm-btn"
+          >
+            حذف
+          </button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="restoreDialog">
+      <form method="dialog" class="dialog-card">
+        <div class="dialog-icon">
+          <svg><use href="#i-shield"></use></svg>
+        </div>
+        <h3>تأكيد الاستعادة</h3>
+        <p>سيتم استبدال البيانات الحالية بالكامل.</p>
+        <p id="restoreSummary" class="restore-summary"></p>
+        <div class="dialog-actions">
+          <button value="cancel" class="btn soft">إلغاء</button>
+          <button id="confirmRestoreBtn" value="default" class="btn danger">
+            استعادة الآن
+          </button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.9/dist/chart.umd.min.js"></script>
+    <script type="module" src="./app.js?v=4.6.1.20260815"></script>
+  </body>
+</html>
