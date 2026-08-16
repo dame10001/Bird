@@ -1,14 +1,25 @@
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
-
-const SUPABASE_URL = "https://htnzusdfrltzwzpaxzyh.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_y6-fjFPlv0nW8cV5r-2lPg_BlBl2IPr";
-const LOGIN_EMAILS = { s: "s@bird.local", emad: "admin@bird.local" };
-
-const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
-  auth: { persistSession:true, autoRefreshToken:true, detectSessionInUrl:false }
-});
+const API_URL = "https://bird-api.5jfwpmvt9w.workers.dev";
 
 const $ = id => document.getElementById(id);
+
+let authToken = localStorage.getItem("bird_token") || "";
+
+async function api(path, options = {}) {
+  const headers = { "Content-Type": "application/json", ...(options.headers || {}) };
+  if (authToken) headers.Authorization = `Bearer ${authToken}`;
+
+  const response = await fetch(`${API_URL}${path}`, { ...options, headers });
+  let data = {};
+  try { data = await response.json(); } catch {}
+
+  if (!response.ok) {
+    const err = new Error(data.error || `HTTP ${response.status}`);
+    err.status = response.status;
+    throw err;
+  }
+  return data;
+}
+
 
 let currentUser = null;
 let currentProfile = null;
@@ -232,18 +243,19 @@ document.addEventListener("click",e=>{
 });
 
 async function loadProfile(){
-  const {data,error}=await supabase.from("profiles").select("id,username,role").eq("id",currentUser.id).single();
-  if(error) throw error;
-  currentProfile=data;
+  const data = await api("/me");
+  currentProfile = data.user;
+  currentUser = data.user;
 }
 
 async function loadOperations(){
   $("loadingState").hidden=false;
-  const {data,error}=await supabase.from("operations").select("*").order("date",{ascending:false}).order("created_at",{ascending:false});
-  $("loadingState").hidden=true;
-  if(error) throw error;
-
-  operations=data||[];
+  try {
+    const data = await api("/operations");
+    operations = data.operations || [];
+  } finally {
+    $("loadingState").hidden=true;
+  }
   renderPeriodBar();
   renderAll();
 }
@@ -433,15 +445,18 @@ $("saleForm").addEventListener("submit",async e=>{
 
   try{
 if(id){
-      const {error}=await supabase.from("operations").update(payload).eq("id",id);
-      if(error) throw error;
+      await api(`/operations/${encodeURIComponent(id)}`, {
+        method:"PUT",
+        body:JSON.stringify(payload)
+      });
       showToast("تم تعديل البيع ✓");
     }else{
       payload.id=makeId();
       payload.created_at=new Date().toISOString();
-      const {data:inserted,error}=await supabase.from("operations").insert([payload]).select("id").single();
-      if(error) throw error;
-      if(!inserted?.id) throw new Error("لم يتم تأكيد إنشاء البيع");
+      await api("/operations", {
+        method:"POST",
+        body:JSON.stringify(payload)
+      });
       showToast("تم حفظ البيع ✓");
     }
 
@@ -482,15 +497,18 @@ $("expenseForm").addEventListener("submit",async e=>{
 
   try{
 if(id){
-      const {error}=await supabase.from("operations").update(payload).eq("id",id);
-      if(error) throw error;
+      await api(`/operations/${encodeURIComponent(id)}`, {
+        method:"PUT",
+        body:JSON.stringify(payload)
+      });
       showToast("تم تعديل المصروف ✓");
     }else{
       payload.id=makeId();
       payload.created_at=new Date().toISOString();
-      const {data:inserted,error}=await supabase.from("operations").insert([payload]).select("id").single();
-      if(error) throw error;
-      if(!inserted?.id) throw new Error("لم يتم تأكيد إنشاء المصروف");
+      await api("/operations", {
+        method:"POST",
+        body:JSON.stringify(payload)
+      });
       showToast("تم حفظ المصروف ✓");
     }
 
@@ -554,8 +572,7 @@ $("confirmDeleteBtn").addEventListener("click",async e=>{
   btn.disabled=true; btn.textContent="جاري الحذف...";
 
   try{
-    const {error}=await supabase.from("operations").delete().eq("id",op.id);
-    if(error) throw error;
+    await api(`/operations/${encodeURIComponent(op.id)}`, { method:"DELETE" });
     $("deleteDialog").close();
     pendingDeleteOperation=null;
     showToast("تم حذف العملية ✓");
@@ -671,9 +688,12 @@ function renderFinance(){
 /* backup remains admin-only */
 $("exportBtn").addEventListener("click",async()=>{
   if(!isAdmin()) return;
-  const {data,error}=await supabase.from("operations").select("*").order("date",{ascending:true}).order("created_at",{ascending:true});
-  if(error){showToast("تعذر إنشاء النسخة");return;}
-  const backup={version:1,exported_at:new Date().toISOString(),operations:data||[]};
+  let backup;
+  try {
+    backup = await api("/backup");
+  } catch {
+    showToast("تعذر إنشاء النسخة"); return;
+  }
   const blob=new Blob([JSON.stringify(backup,null,2)],{type:"application/json;charset=utf-8"});
   const url=URL.createObjectURL(blob);
   const a=document.createElement("a");
@@ -704,11 +724,13 @@ $("confirmRestoreBtn").addEventListener("click",async e=>{
   const b=$("confirmRestoreBtn");
   b.disabled=true;b.textContent="جاري الاستعادة...";
   try{
-    const {data,error}=await supabase.rpc("restore_operations",{p_backup:pendingBackup});
-    if(error) throw error;
+    const result = await api("/restore", {
+      method:"POST",
+      body:JSON.stringify(pendingBackup)
+    });
     $("restoreDialog").close();
     pendingBackup=null;
-    showToast(`تمت الاستعادة (${data} عملية)`);
+    showToast(`تمت الاستعادة (${result.count} عملية)`);
     await loadOperations();
     route("home");
   }catch(err){
@@ -727,12 +749,15 @@ $("loginForm").addEventListener("submit",async e=>{
 
   try{
     const username=$("username").value.trim().toLowerCase();
-    const email=LOGIN_EMAILS[username];
-    if(!email) throw new Error("INVALID_USER");
-
-    const {data,error}=await supabase.auth.signInWithPassword({email,password:$("password").value});
-    if(error) throw error;
-    await enter(data.session);
+    const result = await api("/login", {
+      method:"POST",
+      body:JSON.stringify({ username, password:$("password").value })
+    });
+    authToken = result.token;
+    localStorage.setItem("bird_token", authToken);
+    currentUser = result.user;
+    currentProfile = result.user;
+    await enter(result.user);
   }catch(err){
     console.error(err);
     $("loginError").textContent="اسم المستخدم أو كلمة المرور غير صحيحة.";
@@ -742,11 +767,16 @@ $("loginForm").addEventListener("submit",async e=>{
   }
 });
 
-$("logoutBtn").addEventListener("click",async()=>{await supabase.auth.signOut();leave();});
+$("logoutBtn").addEventListener("click",async()=>{
+  try { await api("/logout", {method:"POST"}); } catch {}
+  authToken="";
+  localStorage.removeItem("bird_token");
+  leave();
+});
 
-async function enter(session){
-  currentUser=session.user;
-  await loadProfile();
+async function enter(user){
+  currentUser=user;
+  currentProfile=user;
 
   $("authView").hidden=true;
   $("appView").hidden=false;
@@ -777,9 +807,16 @@ function leave(){
   $("saleDate").value=todayISO();
   $("expenseDate").value=todayISO();
 
-  const {data:{session}}=await supabase.auth.getSession();
-  if(session){
-    try{await enter(session);}
-    catch(err){console.error(err);await supabase.auth.signOut();leave();}
-  }else leave();
+  if(authToken){
+    try{
+      const data=await api("/me");
+      await enter(data.user);
+      return;
+    }catch(err){
+      console.error(err);
+      authToken="";
+      localStorage.removeItem("bird_token");
+    }
+  }
+  leave();
 })();
